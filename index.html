@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill Split App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+<body>
+
+    
+
+        <!-- Step 1: add people, items and custom items -->
+
+<div class="container">
+    <h1>BILL SPLIT</h1>
+    <div class="toggle-container">
+        <button id="themeToggle" class="button-67">Dark Mode</button>
+    </div>
+    <div class="tabs">
+        <div class="tab-slider" id="tabSlider"></div>
+        <div class="tab-buttons">
+            <button class="tab-link active" id="tab-step1" onclick="showStep(1)" >Add People</button>
+            <button class="tab-link" id="tab-step2" onclick="showStep(2)" disabled>Fees</button>
+            <button class="tab-link" id="tab-step3" onclick="showStep(3)"  disabled>Final Bill</button>
+        </div>
+
+    </div>
+    
+    <!-- Step 1: Add People and Allocate Items -->
+    <div class="step-1" id="step1">
+        <div id="peopleArea" >
+
+            <div class="people-list" id="people-list"></div>
+
+            <!-- Add person form -->
+            <div id="addPersonForm" style="display: none;">
+                <input type="text" id="personNameInput" placeholder="Enter person's name" class="input-2" autofocus> 
+                <button id="submitPerson" class="button-67">Submit</button>
+            </div>
+            <br><br>
+            <button id="openPersonForm" class="button-67">+ Add Person</button>
+            <br>
+        </div>
+
+        <!-- Add shared item form -->
+        <div id="addSharedItemForm" style="display: none; text-align: center;">
+            <input type="text" id="customItemNameInput" placeholder="Enter item name" class="input-1">
+            <input type="number" id="customItemPriceInput" placeholder="Enter item price" class="input-1">
+            <h3>Choose people to split with:</h3>
+            <div id="customItemPeopleList"></div>
+            <button id="submitCustomItem" class="button-67">Submit</button>
+        </div>
+
+        <div style="display: flex; justify-content: center; padding: 3rem;">
+            <button id="openSharedItemForm" class="button-67">Add Custom Item (shared)</button>
+        </div>
+        <div style="display: flex; flex-direction: row; justify-content: flex-end;">
+            <button id="nextStep1" class="button-67">Next</button>
+        </div>
+    </div>
+    
+
+
+
+        <!-- Step 2: Review Subtotal and Add Fees -->
+        <div id="step2" style="display:none;">
+            <h2>Subtotal</h2>
+            <div id="subtotalDisplay"></div>
+
+            <h2>Add Tax, Gratuity, and Custom Fees</h2>
+            <div style="display: flex; justify-content: left; align-items: center;">
+                <div style="display: flex; flex-direction: column; justify-content: left;gap: 2.5rem; align-items: flex-start;">
+                    <label for="tax">Tax (%): </label>
+                    <label for="gratuity">Gratuity/Tips (%): </label>
+                    <label for="customFee">Custom Shared Fee ($): </label>
+                </div>
+                <div style="display: flex; align-items: flex-start;flex-direction: column;gap: 15px;">
+                    <div class="input-group">
+                        <input type="number" id="taxInput" placeholder="Enter tax percentage" class="input-1">
+                    </div>
+                    <div class="input-group">
+                        <input type="number" id="gratuityInput" placeholder="Enter gratuity percentage" class="input-1">
+                    </div>
+                    <div class="input-group">
+                        <input type="number" id="customFeeInput" placeholder="Enter custom fee amount" class="input-1">
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div style="display: flex; flex-direction: row; justify-content: flex-end; gap:20px;">
+                <button id="backStep2" class="button-67">Back</button>
+                <button id="nextStep2" class="button-67">Next</button>
+            </div>
+
+        </div>
+
+        <!-- Step 3: Final Bill -->
+        <div id="step3" style="display:none;">
+            <h2>Final Bill</h2>
+            <div id="finalBill">
+                <div class="seperateBill" id="seperateBill">
+                </div>
+                <br>
+                    <div id="costBreak" class="costBreakdown wrapper">
+                        
+                        </div>
+
+                </div>
+                    
+            <br>
+            <div style="display: flex; flex-direction: row; justify-content: flex-end; gap:20px;">
+                <button id="backStep3" class="button-67" >Back</button>
+                <button id="resetApp" class="button-67">Start Over</button>
+            </div>
+        </div>
+
+    <!-- Person Modal -->
+    <div id="personModal" class="modal" tabindex="-1">
+        <div class="modal-content">
+            <span class="close" id="closePersonModal">&times;</span>
+            <h2>Add a Person</h2>
+            <input type="text" id="personNameInput" placeholder="Enter person's name" class="input-1">
+            <button onclick="submitPerson()">Submit</button>
+        </div>
+    </div>
+    
+
+    <!-- Custom Item Modal -->
+    <div id="customItemModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeCustomItemModal">&times;</span>
+            <h2>Add Custom Shared Item</h2>
+            <input type="text" id="customItemNameInput" placeholder="Enter item name">
+            <input type="number" id="customItemPriceInput" placeholder="Enter item price">
+            <h3>Choose people to split with:</h3>
+            <div id="customItemPeopleList"></div>
+            <button onclick="submitCustomItem()">Submit</button>
+        </div>
+    </div>
+</div>
+
+    <script src="script.js"></script>
+    <script src="darkmode.js"></script>
+
+</body>
+</html>
